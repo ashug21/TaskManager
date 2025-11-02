@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import "./Signup.css";
 import Navbar from "../Navbar/Navbar";
 import toast, { Toaster } from "react-hot-toast";
-import {useNavigate} from 'react-router-dom'
-
-const UserCreated = () => toast.success("Signed Up Successfully");
+import { useNavigate } from "react-router-dom";
+import { api } from "../../../api";
 
 const Signup = () => {
-
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -17,42 +15,40 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const res = await fetch("http://localhost:9000/user/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          reenterpassword,
-        }),
+      const { data } = await api.post("/user/signup", {
+        name,
+        email,
+        password,
+        reenterpassword,
       });
-  
-      const data = await res.json();
-      UserCreated();
-      navigate('/login');
-  
+
+      if (data.success) {
+        toast.success("Signed Up Successfully");
+        navigate("/login");
+      } else {
+        toast.error(data.message || "Signup failed. Try again.");
+      }
+
       setName("");
       setEmail("");
       setPassword("");
       setReEnterPassword("");
-  
     } catch (error) {
       console.error("Signup error:", error);
+      toast.error("Server error or network issue");
     }
   };
-  
 
   return (
     <div>
       <Navbar />
+      <Toaster position="top-right" />
       <div className="signup-wrapper">
         <div className="signup-box">
           <h2 className="signup-heading">Create Account</h2>
           <p className="signup-subtext">Join now to start managing your tasks.</p>
-
 
           <form className="signup-form" onSubmit={handleSubmit}>
             <div className="form-group">

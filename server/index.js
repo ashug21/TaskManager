@@ -13,24 +13,24 @@ const cors = require('cors');
 const PORT = process.env.PORT || 9000;
 
 // CORS Setup — allow both localhost (for testing) and your live Vercel site
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://task-manager-peach-ten-67.vercel.app", // 👈 your current frontend URL
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log("❌ Blocked by CORS:", origin);
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
-}));
-
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (
+        !origin ||                              // allow tools like Postman
+        origin.includes("localhost") ||         // allow local testing
+        origin.includes("vercel.app")           // allow any Vercel preview or production domain
+      ) {
+        callback(null, true);
+      } else {
+        console.log("❌ Blocked by CORS:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

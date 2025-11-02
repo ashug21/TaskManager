@@ -15,11 +15,10 @@ const PORT = 9000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  }));
-
+  origin: ["http://localhost:5173", "https://taskmanager-frontend.vercel.app"], // replace with your actual Vercel URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
 // View Engine
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));

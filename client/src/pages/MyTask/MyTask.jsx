@@ -11,26 +11,32 @@ const taskDeleted = () => toast.success("Task deleted successfully");
 const MyTask = () => {
   const [data, setData] = useState([]);
 
+  // ✅ Use your Render live backend URL
   const API_BASE = "https://taskmanager-7sxx.onrender.com/taskmanager";
 
+  // Fetch all tasks
   const fetchData = async () => {
     try {
       const res = await axios.get(`${API_BASE}/gt`);
       setData(res.data);
     } catch (error) {
       console.error("Fetch error:", error);
+      toast.error("Failed to load tasks");
     }
   };
 
+  // Update task status
   const alterStatus = async (id) => {
     try {
       await axios.put(`${API_BASE}/ut/${id}`);
       fetchData(); // Refresh after change
     } catch (error) {
       console.error("Status update error:", error);
+      toast.error("Error updating task status");
     }
   };
 
+  // Delete a task
   const deleteTask = async (id) => {
     try {
       await axios.delete(`${API_BASE}/dt/${id}`);
@@ -38,9 +44,11 @@ const MyTask = () => {
       taskDeleted();
     } catch (error) {
       console.error("Delete error:", error);
+      toast.error("Error deleting task");
     }
   };
 
+  // Load tasks on mount
   useEffect(() => {
     fetchData();
   }, []);

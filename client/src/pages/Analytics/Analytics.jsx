@@ -9,12 +9,17 @@ const Analytics = () => {
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
 
+  // ✅ Use your live Render API base URL
+  const API_BASE = "https://taskmanager-7sxx.onrender.com/analytics";
+
   const getTotalTasks = async () => {
     try {
-      const res = await axios.get("https://taskmanager-7sxx.onrender.com/analytics/total");
-      setTotalTasks(res.data.total || 0);
-      setCompleted(res.data.completed || 0);
-      setPending(res.data.pending || 0);
+      const res = await axios.get(`${API_BASE}/total`);
+      if (res.data) {
+        setTotalTasks(res.data.total || 0);
+        setCompleted(res.data.completed || 0);
+        setPending(res.data.pending || 0);
+      }
     } catch (error) {
       console.error("Fetch error:", error);
     }
@@ -34,6 +39,7 @@ const Analytics = () => {
       <div className="analytics1-container">
         <div className="analytics1-card">
           <h2 className="analytics1-title">Task Analytics</h2>
+
           <div className="analytics1-stats">
             <p className="analytics1-item total">
               Total Tasks: <span>{totaltasks}</span>

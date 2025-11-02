@@ -5,19 +5,18 @@ import axios from "axios";
 import Footer from "../../components/Footer/Footer";
 
 const Analytics = () => {
-  const [totaltasks, setTotalTasks] = useState("");
-  const [completed, setCompleted] = useState("");
-  const [pending, setPending] = useState("");
- 
+  const [totaltasks, setTotalTasks] = useState(0);
+  const [completed, setCompleted] = useState(0);
+  const [pending, setPending] = useState(0);
 
   const getTotalTasks = async () => {
     try {
-      const res = await axios.get("http://localhost:9000/analytics/total");
-      setTotalTasks(res.data.total);
-      setCompleted(res.data.completed);
-      setPending(res.data.pending);
+      const res = await axios.get("https://taskmanager-7sxx.onrender.com/analytics/total");
+      setTotalTasks(res.data.total || 0);
+      setCompleted(res.data.completed || 0);
+      setPending(res.data.pending || 0);
     } catch (error) {
-      console.log("Fetch error:", error);
+      console.error("Fetch error:", error);
     }
   };
 
@@ -25,9 +24,13 @@ const Analytics = () => {
     getTotalTasks();
   }, []);
 
+  const completionRate =
+    totaltasks > 0 ? Math.round((completed / totaltasks) * 100) : 0;
+
   return (
     <div>
       <Navbar />
+
       <div className="analytics1-container">
         <div className="analytics1-card">
           <h2 className="analytics1-title">Task Analytics</h2>
@@ -36,32 +39,30 @@ const Analytics = () => {
               Total Tasks: <span>{totaltasks}</span>
             </p>
             <p className="analytics1-item completed">
-              Task Completed: <span>{completed}</span>
+              Completed: <span>{completed}</span>
             </p>
             <p className="analytics1-item pending">
-              Pending Tasks: <span>{pending}</span>
+              Pending: <span>{pending}</span>
             </p>
           </div>
-
         </div>
-
-
 
         <div className="progress-container1">
           <p>Task Completion Rate</p>
           <div className="progress-bar1">
             <div
               className="progress-fill1"
-              style={{ width: `${(completed / totaltasks) * 100}%` }}
+              style={{
+                width: `${completionRate}%`,
+              }}
             ></div>
           </div>
-          <p>{Math.round((completed / totaltasks) * 100)}% completed</p>
+          <p>{completionRate}% completed</p>
         </div>
       </div>
 
-    <br/> <br/> <br/>
-    <div className="gap"></div>
-      <Footer/>
+      <div className="gap"></div>
+      <Footer />
     </div>
   );
 };

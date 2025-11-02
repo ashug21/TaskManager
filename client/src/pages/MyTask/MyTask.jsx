@@ -6,36 +6,38 @@ import DeleteIcon from "../../assets/bin.png";
 import Footer from "../../components/Footer/Footer";
 import toast, { Toaster } from "react-hot-toast";
 
-const taskDeleted = () => toast.success("Task deleted Successfully");
+const taskDeleted = () => toast.success("Task deleted successfully");
 
 const MyTask = () => {
   const [data, setData] = useState([]);
 
+  const API_BASE = "https://taskmanager-7sxx.onrender.com/taskmanager";
+
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:9000/taskmanager/gt");
+      const res = await axios.get(`${API_BASE}/gt`);
       setData(res.data);
     } catch (error) {
-      console.log("Fetch error:", error);
+      console.error("Fetch error:", error);
     }
   };
 
   const alterStatus = async (id) => {
     try {
-      await axios.put(`http://localhost:9000/taskmanager/ut/${id}`);
+      await axios.put(`${API_BASE}/ut/${id}`);
       fetchData(); // Refresh after change
     } catch (error) {
-      console.log("Status update error:", error);
+      console.error("Status update error:", error);
     }
   };
 
   const deleteTask = async (id) => {
     try {
-      await axios.delete(`http://localhost:9000/taskmanager/dt/${id}`);
+      await axios.delete(`${API_BASE}/dt/${id}`);
       fetchData();
       taskDeleted();
     } catch (error) {
-      console.log("Delete error:", error);
+      console.error("Delete error:", error);
     }
   };
 

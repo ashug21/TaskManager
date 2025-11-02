@@ -5,6 +5,7 @@ import { Categories } from "../../assets/TaskAssets";
 import axios from "axios";
 import Footer from "../../components/Footer/Footer";
 import toast, { Toaster } from "react-hot-toast";
+import { api } from "../../../api";
 
 const Newtask = () => toast.success("Task Added Successfully");
 
@@ -19,7 +20,7 @@ const AddTask = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://taskmanager-7sxx.onrender.com/taskmanager/at",  {
+      await api.post("/taskmanager/at",  {
         title,
         subtitle,
         category,

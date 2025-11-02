@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./MyTask.css";
 import Navbar from "../../components/Navbar/Navbar";
-import axios from "axios";
 import DeleteIcon from "../../assets/bin.png";
 import Footer from "../../components/Footer/Footer";
 import toast, { Toaster } from "react-hot-toast";
+import { api } from "../../../api"; // ✅ using centralized axios instance
 
 const taskDeleted = () => toast.success("Task deleted successfully");
 
 const MyTask = () => {
   const [data, setData] = useState([]);
 
-  // ✅ Use your Render live backend URL
-  const API_BASE = "https://taskmanager-7sxx.onrender.com/taskmanager";
-
-  // Fetch all tasks
+  // ✅ Fetch all tasks
   const fetchData = async () => {
     try {
-      const res = await axios.get(`${API_BASE}/gt`);
+      const res = await api.get("/taskmanager/gt"); // 👈 use api instance
       setData(res.data);
     } catch (error) {
       console.error("Fetch error:", error);
@@ -25,21 +22,21 @@ const MyTask = () => {
     }
   };
 
-  // Update task status
+  // ✅ Update task status
   const alterStatus = async (id) => {
     try {
-      await axios.put(`${API_BASE}/ut/${id}`);
-      fetchData(); // Refresh after change
+      await api.put(`/taskmanager/ut/${id}`);
+      fetchData(); // refresh after update
     } catch (error) {
       console.error("Status update error:", error);
       toast.error("Error updating task status");
     }
   };
 
-  // Delete a task
+  // ✅ Delete a task
   const deleteTask = async (id) => {
     try {
-      await axios.delete(`${API_BASE}/dt/${id}`);
+      await api.delete(`/taskmanager/dt/${id}`);
       fetchData();
       taskDeleted();
     } catch (error) {
@@ -48,7 +45,6 @@ const MyTask = () => {
     }
   };
 
-  // Load tasks on mount
   useEffect(() => {
     fetchData();
   }, []);

@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import "./Analytics.css";
 import Navbar from "../../components/Navbar/Navbar";
-import axios from "axios";
 import Footer from "../../components/Footer/Footer";
+import { api } from "../../../api"; // ✅ Correct import
 
 const Analytics = () => {
   const [totaltasks, setTotalTasks] = useState(0);
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
 
-  // ✅ Use your live Render API base URL
-  const API_BASE = "https://taskmanager-7sxx.onrender.com/analytics";
-
   const getTotalTasks = async () => {
     try {
-      const res = await axios.get(`${API_BASE}/total`);
+      // ✅ Using preconfigured axios instance
+      const res = await api.get("/analytics/total");
       if (res.data) {
-        setTotalTasks(res.data.total || 0);
-        setCompleted(res.data.completed || 0);
-        setPending(res.data.pending || 0);
+        setTotalTasks(res.data.total ?? 0);
+        setCompleted(res.data.completed ?? 0);
+        setPending(res.data.pending ?? 0);
+      } else {
+        console.error("Invalid analytics data:", res.data);
       }
     } catch (error) {
       console.error("Fetch error:", error);

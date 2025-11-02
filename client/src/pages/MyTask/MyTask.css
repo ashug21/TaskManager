@@ -1,0 +1,254 @@
+/* ---------- Variables ---------- */
+:root {
+  --bg: linear-gradient(135deg, #111827, #1f2937);
+  --card-bg: #1e293b;
+  --muted: #94a3b8;
+  --heading: #f3f4f6;
+  --accent: #3b82f6;
+  --radius-lg: 16px;
+  --radius-sm: 10px;
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.4);
+  --shadow-tight: 0 6px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- Container ---------- */
+.mytask-container {
+  background: var(--bg);
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--heading);
+  margin: 0;
+  padding: 0;
+}
+
+.mytask-container .navbar {
+  width: 100%; /* ✅ Fixed full width */
+}
+
+/* ---------- Tasks Wrapper ---------- */
+.tasks-wrapper {
+  padding: 28px 20px 60px;
+}
+
+/* ---------- Tasks Grid ---------- */
+.tasks-grid {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  padding: 28px;
+  justify-items: center;
+}
+
+/* ---------- Task Card ---------- */
+.task-card {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 35px 18px 18px;
+  width: 100%;
+  max-width: 360px;
+  min-height: 360px; /* ✅ keep height stable */
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-tight);
+}
+
+/* ---------- Icon Container ---------- */
+.icon-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 8px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* ---------- Delete Icon ---------- */
+.delete-icon {
+  margin-top: 25px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.delete-icon:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* ---------- Titles ---------- */
+.task-title {
+  color: var(--heading);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.task-subtitle {
+  color: var(--muted);
+  font-size: 13.5px;
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* ---------- Category ---------- */
+.task-category {
+  display: inline-block;
+  margin: 4px 0;
+  padding: 6px 10px;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent);
+  font-weight: 600;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+}
+
+/* ---------- Description ---------- */
+.task-category:nth-of-type(4) {
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  color: #e5e7eb;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px;
+  line-height: 1.45;
+  flex-grow: 1;
+  overflow-wrap: break-word;
+}
+
+/* ---------- Deadline (fixed above status) ---------- */
+.task-deadline {
+  margin-top: auto;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #22d3ee;
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #e0f2fe;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ---------- Status ---------- */
+.task-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  color: #bfdbfe;
+}
+
+/* ---------- Mark as Done (span) ---------- */
+.task-status span {
+  background: var(--accent);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.task-status span:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+}
+
+/* ---------- Status Button ---------- */
+.task-status button {
+  background: #111827;
+  border: 1px solid #3b82f6;
+  color: #93c5fd;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.task-status button:hover {
+  background: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
+}
+
+/* ---------- Empty State ---------- */
+.no-task-text {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 16px;
+  width: 100%;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ---------- Sort Buttons ---------- */
+.sort-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 15px 20px;
+}
+
+.sort-btn {
+  background-color: #f4f4f4;
+  border: 1px solid #d3d3d3;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.sort-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.sort-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .tasks-grid {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .task-card {
+    padding: 14px;
+    max-width: 100%;
+  }
+
+  .task-title {
+    font-size: 16px;
+  }
+}

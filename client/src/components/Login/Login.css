@@ -1,0 +1,123 @@
+/* Scoped Login Page Styling — non-interfering */
+
+:where(.login-wrapper) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #f0f3ff 0%, #e7ecff 100%);
+  font-family: "Poppins", sans-serif;
+  isolation: isolate;
+}
+
+:where(.login-box) {
+  background: #fff;
+  padding: 3.5rem 4rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+:where(.login-box):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+:where(.login-heading) {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+:where(.login-subtext) {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2.5rem;
+}
+
+:where(.login-form) {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+:where(.form-group) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+:where(.form-group label) {
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+:where(.form-group input) {
+  width: 100%;
+  padding: 14px 15px;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.25s ease;
+}
+
+:where(.form-group input):focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15);
+}
+
+:where(.login-btn) {
+  margin-top: 0.5rem;
+  padding: 14px;
+  width: 100%;
+  background: linear-gradient(135deg, #6c63ff, #5148ff);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+:where(.login-btn):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(108, 99, 255, 0.35);
+}
+
+:where(.login-signup) {
+  margin-top: 1.8rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+:where(.login-signup a) {
+  color: #6c63ff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+:where(.login-signup a):hover {
+  color: #4a40ff;
+  text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+  :where(.login-box) {
+    padding: 2rem;
+    max-width: 90%;
+  }
+
+  :where(.login-heading) {
+    font-size: 1.7rem;
+  }
+}

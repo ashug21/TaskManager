@@ -17,7 +17,7 @@ const Login = () => {
     try {
       const { data } = await api.post("/user/login", { email, password });
 
-      if (data.success) {
+      if (data.success === true) {
         toast.success("Logged In Successfully");
         localStorage.setItem("userLoggedIn", "true");
         navigate("/");

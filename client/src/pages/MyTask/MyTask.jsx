@@ -4,17 +4,17 @@ import Navbar from "../../components/Navbar/Navbar";
 import DeleteIcon from "../../assets/bin.png";
 import Footer from "../../components/Footer/Footer";
 import toast, { Toaster } from "react-hot-toast";
-import { api } from "../../../api"; // ✅ using centralized axios instance
+import { api } from "../../../api"; 
 
 const taskDeleted = () => toast.success("Task deleted successfully");
 
 const MyTask = () => {
   const [data, setData] = useState([]);
 
-  // ✅ Fetch all tasks
+
   const fetchData = async () => {
     try {
-      const res = await api.get("/taskmanager/gt"); // 👈 use api instance
+      const res = await api.get("/taskmanager/gt"); 
       setData(res.data);
     } catch (error) {
       console.error("Fetch error:", error);
@@ -22,18 +22,18 @@ const MyTask = () => {
     }
   };
 
-  // ✅ Update task status
+
   const alterStatus = async (id) => {
-    try {
+    try { 
       await api.put(`/taskmanager/ut/${id}`);
-      fetchData(); // refresh after update
+      fetchData(); 
     } catch (error) {
       console.error("Status update error:", error);
       toast.error("Error updating task status");
     }
   };
 
-  // ✅ Delete a task
+
   const deleteTask = async (id) => {
     try {
       await api.delete(`/taskmanager/dt/${id}`);
@@ -59,7 +59,7 @@ const MyTask = () => {
           {data.length > 0 ? (
             data.map((item) => (
               <div key={item._id} className="task-card">
-                {/* Delete Icon */}
+
                 <div className="icon-container">
                   <img
                     src={DeleteIcon}

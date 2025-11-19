@@ -24,7 +24,7 @@ const Signup = () => {
         reenterpassword,
       });
 
-      if (data.success) {
+      if (data.success === true) {
         toast.success("Signed Up Successfully");
         navigate("/login");
       } else {

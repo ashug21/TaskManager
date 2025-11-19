@@ -11,7 +11,7 @@ const Analytics = () => {
 
   const getTotalTasks = async () => {
     try {
-      // ✅ Using preconfigured axios instance
+
       const res = await api.get("/analytics/total");
       if (res.data) {
         setTotalTasks(res.data.total ?? 0);

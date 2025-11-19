@@ -47,14 +47,11 @@ const UpdateStatus = async(req,res) => {
         if (!task) {
             return res.json({ success: false, message: "Task not found" });
           }
-          task.status = !task.status;
+          task.status = !task.status; 
 
           await task.save();
 
-          res.status(200).json({
-            success: true,
-            message: `Task status updated successfully to ${task.status}`,
-            updatedTask: task,
+          res.status(200).json({success: true, message: "Task status updated successfully" ,updatedTask: task,
           });
 
     }

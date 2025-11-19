@@ -19,7 +19,7 @@ const LoginUser = async(req,res) => {
     const {email , password} = req.body;
 
     try{
-      const user =  await User.find({email , password});
+      const user =  await User.findOne({email , password});
 
         if(!user){
             res.json({success : false , message : "Invalid Credentials"});

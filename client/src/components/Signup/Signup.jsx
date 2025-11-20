@@ -15,7 +15,18 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // FRONTEND VALIDATION
+    if (!name.trim()) return toast.error("Name is required");
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return toast.error("Enter a valid email address");
+  
+    if (password.length < 6) return toast.error("Password must be at least 6 characters");
+  
+    if (password !== reenterpassword) return toast.error("Passwords do not match");
+  
+    // API CALL
     try {
       const { data } = await api.post("/user/signup", {
         name,
@@ -23,24 +34,34 @@ const Signup = () => {
         password,
         reenterpassword,
       });
-
-      if (data.success === true) {
-        toast.success("Signed Up Successfully");
+  
+      if (data.success) {
+        toast.success("User created successfully", { duration: 3000 });
+  
+        setName("");
+        setEmail("");
+        setPassword("");
+        setReEnterPassword("");
+  
         navigate("/login");
       } else {
-        toast.error(data.message || "Signup failed. Try again.");
+        toast.error(data.message || "Signup failed");
       }
-
-      setName("");
-      setEmail("");
-      setPassword("");
-      setReEnterPassword("");
     } catch (error) {
       console.error("Signup error:", error);
-      toast.error("Server error or network issue");
+    
+      console.log("FULL ERROR RESPONSE →", error.response);
+    
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Server error or network issue");
+      }
     }
   };
-
+  
+  
+  
   return (
     <div>
       <Navbar />
